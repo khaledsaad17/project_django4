@@ -1,0 +1,148 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Contact Us</title>
+        <meta name="viewport" content="width=device-width,
+          initial-scale=1.0"/>
+        <link rel="stylesheet" href="{%static 'css/contactus.css'%}" />
+        <style>
+            .images_control_and_content {
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                background: url('{% static '/img/contact.jpg'%}') no-repeat center center fixed;
+                background-size: cover;
+            }
+            .link {
+                color: darkblue !important;  /* Force black color for all nav links */
+                text-decoration: none;
+            }
+            .nav-logo p {
+                color: darkblue !important;  /* Force black color for logo */
+                font-weight: bold;
+            }
+            .nav {
+                display: flex;
+                align-items: center;
+                padding: 15px 30px;
+                background: transparent;
+                justify-content: flex-start;
+                gap: 20px;
+            }
+            .nav-logo {
+                margin-right: 30px;
+            }
+            .nav-menu {
+                flex: 1;
+                max-width: 600px;
+            }
+            .nav-menu ul {
+                display: flex;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .nav-menu li {
+                margin-right: 20px;
+            }
+            .nav-menu a.active {
+                color: black !important;  /* Force black color for active link */
+                font-weight: bold;
+            }
+            .nav-button {
+                display: flex;
+                align-items: center;
+                margin-right: 50px;
+            }
+            .nav-button button {
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 8px 15px;
+                font-size: 16px;
+                border-radius: 4px;
+            }
+            .nav-button button[onclick*="sign_out"] {
+                color: red;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            .nav-button button[onclick*="sign_out"]:hover {
+                color: darkred;
+            }
+            .nav-menu-btn {
+                display: none;
+            }
+            @media (max-width: 768px) {
+                .nav-menu-btn {
+                    display: block;
+                    margin-left: 15px;
+                }
+            }
+        </style>
+    </head>
+    <body style="">
+    <div style=" " class="images_control_and_content">
+        <nav class="nav">
+            <div class="nav-logo">
+                <p>Capsule .</p>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul>
+                    <li ><a class="link" href="{% url 'home' %} ">Home</a></li>
+                    <li ><a class="link" href=" {% url 'about' %} ">About</a></li>
+                    <li ><a class="link" href=" {% url 'services' %} ">Services</a></li>
+                    <li ><a class="link active"  href=" {% url 'contact_us' %} ">Contact Us</a></li>
+                    
+                </ul>
+            </div>
+            <div class="nav-button">
+                {% comment %} <button class="btn white-btn " id="loginBtn"  onclick="location.href=''">LOG IN</button> {% endcomment %}
+                {% if error == 'true' %} <button class="btn white-btn " id="loginBtn"  onclick="location.href='{% url "login" %}'">LOG IN</button> {% else %} <button class="btn white-btn " id="loginBtn"  onclick="location.href='{% url "sign_out" %}'">Sign Out</button> {% endif %}
+                {% comment %} <button class="btn " id="registerBtn" onclick="location.href=''">SIGN UP</button> {% endcomment %}
+            </div>
+            <div class="nav-menu-btn">
+                <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
+        <div class="text">
+        <span class="span1">Let's Keep In Touch</span>
+        <div class="heart_photo">
+            <img src="{% static 'img/heart.png'%}">
+        </div>
+        
+         </div>
+         <br>
+         
+         
+         
+    <div class="contacts_apps">
+        <div class="face_book">
+            <div class="facephoto">
+                 <img src="{% static 'img/face.png'%}">
+            </div>
+            <div class="face_book_text"> <h4>khaaled@yahoo.com</h4></div>
+           
+        </div>
+        <div class="insta">
+            <div class="facephoto">
+                 <img src="{%static 'img/insta.png'%}">
+            </div>
+            <div class="insta_text"> <h4>khaaled@insta.com</h4></div>
+           
+        </div>
+        <div class="phone">
+            <div class="facephoto">
+                 <img src="{%static 'img/phone.png'%}">
+            </div>
+            <div class="phone_text"> <h4>01002633485</h4></div>
+           
+        </div>
+    </div>
+
+    </div> 
+       
+    </body>
+</html>

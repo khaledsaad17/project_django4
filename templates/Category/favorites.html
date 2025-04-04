@@ -1,0 +1,194 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/medicine.css'%}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+            .favorites-container {
+                padding: 20px;
+            }
+            .favorites-title {
+                text-align: center;
+                margin-bottom: 30px;
+                color: #333;
+                display: inline-block;
+            }
+            .title-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 30px;
+                gap: 20px;
+            }
+            .favorites-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+                padding: 20px;
+            }
+            .favorite-item {
+                background: white;
+                border-radius: 8px;
+                padding: 15px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                text-align: center;
+            }
+            .favorite-item img {
+                max-width: 100%;
+                height: auto;
+                margin-bottom: 10px;
+            }
+            .favorite-item h3 {
+                color: #333;
+                margin: 10px 0;
+            }
+            .favorite-item p {
+                color: #666;
+                margin: 5px 0;
+            }
+            .remove-favorite {
+                color: red;
+                cursor: pointer;
+                font-size: 20px;
+                margin-top: 10px;
+            }
+            .add-to-cart {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 10px;
+                transition: background-color 0.3s;
+            }
+            .add-to-cart:hover {
+                background-color: #45a049;
+            }
+            .cart-link {
+                position: absolute;
+                right: 250px;
+                top: 20px;
+                text-decoration: none;
+                color: #333;
+                font-size: 18px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .cart-link i {
+                font-size: 24px;
+            }
+            .cart-link:hover {
+                color: #4CAF50;
+            }
+            .button-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 10px;
+            }
+            .card-button {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .card-button:hover {
+                background-color: #45a049;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="all">
+            <div class="capsule">
+                <div class="capsule_img">
+                    <img src="{% static 'img/capsule.png'%}" alt="">
+                </div>
+                <div class="capsule_text">
+                    <h1>Capsule</h1>
+                </div>
+            </div>
+           
+            <div class="login">
+                {% if user_info.user_is_exist %}
+                    <a href="{% url 'sign_out' %}">Sign Out</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="favorites-container">
+            <div class="title-container">
+                <h2 class="favorites-title">Your Favorite Products</h2>
+                <a href="{% url 'card' %}" class="card-button">
+                    <i class="fas fa-shopping-cart"></i> Go to Cart
+                </a>
+            </div>
+            <div class="favorites-grid">
+                {% for favorite in favorites %}
+                    <div class="favorite-item">
+                        <img src="{% static ''%}{{ favorite.image_direction }}" alt="{{ favorite.product.name }}">
+                        <h3>{{ favorite.p_name }}</h3>
+                        <p>{{ favorite.price }} EGP</p>
+                        <div class="button-container">
+                            <i class="fas fa-heart remove-favorite" data-product-id="{{ favorite.id }}"></i>
+                            <button class="add-to-cart" onclick="addToCart({{ favorite.id }})">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p style="text-align: center; grid-column: 1/-1;">You haven't added any products to your favorites yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <script>
+            document.querySelectorAll('.remove-favorite').forEach(heart => {
+                heart.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    fetch("{% url 'toggle_favorite' %}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                            "X-CSRFToken": "{{ csrf_token }}"
+                        },
+                        body: "product_id=" + productId
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            this.closest('.favorite-item').remove();
+                        }
+                    })
+                    .catch(error => console.error("Error:", error));
+                });
+            });
+
+            function addToCart(productId) {
+                fetch("{% url 'add_to_cart' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: "product_id=" + productId
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => console.error("Error:", error));
+            }
+        </script>
+    </body>
+</html> 

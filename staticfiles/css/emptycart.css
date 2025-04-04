@@ -1,0 +1,104 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body{
+    display: block;
+
+}
+
+
+.logo {
+    width: 10%;
+    padding-left:80%;
+    padding-top: 20px;
+}
+
+.all {
+   
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+   
+}
+.capsule {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+   
+   
+}
+.login {
+    width: 10%;
+}
+.capsule_img {
+    width: 5%;
+   
+}
+.capsule_text {
+    width: 95%;
+}
+.capsule_img img {
+    width: 90%;
+}
+.capsule_text h1 {
+    color: #078EACFA;
+    
+   font-size: 35px;
+   font-style: italic;
+   font-weight: 400;
+
+}
+.login a {
+    text-decoration: none;
+    font-size: 13px;
+    color: #078EACFA;
+}
+.all_off{
+    margin-top: 10%;
+}
+.emptycartdesign{
+    display: flex;
+    align-items: center;
+    /*background-color: brown;
+    /*height: 100vh;*/
+    margin-top: 50px;
+
+}
+.emptyphoto{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+}
+.emptyphoto img{
+    width: 15%;
+    
+    background-color:black;
+}
+.emptytext{
+    display: flex;
+    justify-content: center;
+    
+}
+button{
+
+    border-radius: 20px;
+    padding: 10px;
+    background-color: #078EACFA;
+    stroke: aliceblue;
+    text-decoration: none;
+}
+button a{
+    text-decoration: none;
+    color: aliceblue;
+}
+button:hover{
+    background-color: rgb(7, 196, 196);
+}
+

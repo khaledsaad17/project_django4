@@ -1,0 +1,141 @@
+{%load static%}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/home.css'%}">
+        <style>
+            button{
+                cursor: pointer;
+            }
+            body {
+                margin:0;
+            }
+    
+            .b {
+                margin-bottom: 50px;
+            }
+            .nav-menu a[href*="sign_out"]  {
+                color: red;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            .nav-menu a[href*="sign_out"]:hover {
+                color: darkred;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="home-p "style="background-image :url('{% static '/img/background.avif'%}');">
+            <div class="all"> 
+                <div class="capsule">
+                    <div class="capsule_img">
+                        <img src="{% static 'img/capsule.png' %}" alt="">
+                    </div>
+                    <div class="capsule_text">
+                        <h1>Capsule</h1>
+                    </div>
+                </div>
+                <div class="nav-menu">
+                    
+                    <ul>
+                        <li ><a class="link" href="{% url 'home' %} ">Home</a></li>
+                        <li ><a class="link" href=" {% url 'about' %} ">About</a></li>
+                        <li ><a class="link" href=" {% url 'services' %} ">Services</a></li>
+                        <li ><a class="link"  href=" {% url 'contact_us' %} ">Contact Us</a></li>
+                        {% if error == 'true' %}
+                             <li><a class="link"  href="{% url "login" %}">Log in</a></li> 
+                        {% else %}
+                            <li><a class="link"  href="{% url "sign_out" %}">Sign Out</a></li> 
+                        {% endif %}
+                    </ul>
+                  
+                </div>
+            </div>
+            
+              <div class="welcome">
+                <h1>Welcome,{% if error == 'false' %} {{user_name}} {% else %}You{% endif %}</h1>
+                <p>
+                    to the world of health and beauty
+                </p>
+                <button onclick="location.href='#shop-section'">Shop now</button>
+
+             </div>
+        </div>
+        <div id="shop-section" class="categories">
+            <h3 class="special">Categories</h3>
+            <div class="cart">
+                <img src=" {%static 'img/medication.jpg'%}" alt="">
+                <a href=" {% url "medication" %}"><p>Medications</p></a>
+            </div>
+            <div class="cart">
+                <img src=" {%static 'img/skin.jpg'%}" alt="">
+                <a href="{% url "skincare" %} "><p>Skin Care</p></a>
+            </div>
+            <div class="cart" >
+              <img src=" {%static 'img/hair.jpg'%}" alt="">
+              <a href="{% url "haircare" %} "><p>Hair Care</p></a>
+            </div>
+            <div class="cart">
+                <img src=" {%static 'img/mom.jpg'%}" alt="">
+                <a href="{% url "baby_mom" %} "><p>Baby & Mom </p></a>
+            </div>
+            <div class="cart">
+                <img src=" {%static 'img/Frame-2457-4_1667482979.webp'%}" alt="">
+                <a href=" {% url "makeup" %}"><p>Makeup & Accessories</p></a>
+            </div>
+        </div>
+        <div class="r1">
+            <h3 class="special">Trending</h3>
+            <div class="c1">
+                
+                <img src=" {%static 'img/hero.webp'%}" alt="" class="centre ">
+                <p>Hero Baby | Nutrasense 2</p>
+                <h3>349 EGP</h3>
+                <button  onclick="addToCart(1)">Add to card</button>
+            </div>
+            <div class="c1">
+                <img src=" {%static 'img/oil.webp'%}" alt="" class="centre ">
+                <p>Johnson's Baby Oil </p>
+                <h3>90 EGP</h3>
+                <button onclick="addToCart(2)">Add to card</button>
+            </div>
+            <div class="c1">
+                <img src=" {%static 'img/molfix.webp'%}" alt="" class="centre ">
+                <p>Molfix | Junior Baby Diaper   </p>
+                <h3>385 EGP</h3>
+                <button  onclick="addToCart(3)">Add to card</button>
+            </div>
+            <div class="clr"></div>
+        </div>
+        
+       <div class="brand">
+            <h3 class="special">Brand</h3>
+            <div class="b">
+                <p>Beesline</p>
+            </div>
+            <div class="b">
+                <p>Luna</p>
+            </div>
+            <div class="b">
+                <p>Molfix</p>
+            </div>
+       </div>
+      
+    </body>
+    <script>
+        function addToCart(productId) {
+            fetch("{% url 'add_to_cart' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: "product_id=" + productId
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);  // إظهار رسالة للمستخدم
+            })
+            .catch(error => console.error("Error:", error));
+        }
+        </script>
+</html>

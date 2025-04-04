@@ -1,0 +1,165 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body{
+    display: block;
+   
+
+}
+/* .images_control_and_content{
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  
+} */
+
+.span1{
+    color:  rgba(7, 142, 172, 0.98);
+    position: absolute;
+    top: 270px;
+    text-align: left;
+    margin-left: 20px;
+    font-size: 30px;
+}
+.heart_photo img{
+    
+    position: absolute;
+    width: 80px;
+    top: 255px;
+    left: 280px;
+}
+.contacts_apps {
+    position: relative;
+    right: 290px;
+    bottom: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-content: flex-end;
+
+}
+.face_book{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    justify-content: right;
+    
+    /* width: 100%; */
+    /* display: flex;
+    justify-content: right;
+    justify-items: left; */
+}
+.facephoto img
+{
+    /* display: flex; */
+    width: 50px;
+    margin: 10px;
+    
+}
+.face_book_text{
+    /* display: flex; */
+    color: #fff;
+    /* align-items: center; */
+    margin-top: 30px;
+    margin-left: 10px;
+}
+.insta{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    justify-content: right;
+    /* width: 100%; */
+    /* display: flex;
+    justify-content: right;
+    justify-items: center; */
+}
+.insta_text{
+    /* display: flex; */
+    color: #fff;
+    /* align-items: center; */
+    margin-top: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.phone{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    justify-content: right;
+    /* width: 100%; */
+    /* display: flex;
+    justify-content: right;
+    justify-items: center; */
+    /* margin-right: 45px; */
+}
+
+.phone_text{
+    /* display: flex; */
+    color: #fff;
+    /* align-items: center; */
+    margin-top: 30px;
+    margin-left: 17px;
+    margin-right: 50px;
+}
+
+
+.nav{
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+    z-index: 100;
+    margin-left: 60px;
+}
+.nav-logo p{
+    color: white;
+    font-size: 25px;
+    font-weight: 600;
+}
+.nav-menu ul{
+    display: flex;
+}
+.nav-menu ul li{
+    list-style-type: none;
+}
+.nav-menu ul li .link{
+    text-decoration: none;
+    font-weight: 500;
+    color: #fff;
+    padding-bottom: 15px;
+    margin: 0 25px;
+}
+.link:hover, .active{
+    border-bottom: 2px solid #fff;
+}
+.nav-button{
+    appearance: auto;
+}
+.nav-button .btn{
+    width: 130px;
+    height: 40px;
+    font-weight: 500;
+    background: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s ease;
+    margin-left: 20px;
+}
+.btn:hover{
+    background: #0A5E8D;
+   color: #fff;
+}

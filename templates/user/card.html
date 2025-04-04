@@ -1,0 +1,148 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Shopping Cart design</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="{% static "css/card.css" %}" rel="stylesheet">
+	<style>
+		.unit input{
+			
+			width:50px;
+		}
+		.centre {
+			display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 50%;
+		}
+	</style>
+</head>
+<body>
+    <div class="wrapper">
+		<h1>Shopping Cart</h1>
+		<div class="project">
+			<div class="shop">
+				
+				{% for index in products  %}
+				
+					<div class="box">  
+						<img src="{% static ''%}{{index.product_direction}}" alt="" class="centre ">
+						<div class="content">
+							<h3>{{index.product_name}}</h3>
+							<h4>Price: {{index.product_price}} EGP</h4>
+							<p class="unit">Quantity: 
+								
+								<input type="number" class="quantity-input" data-product-id="{{index.product_id}}" value="{{index.product_quantity}}" min="1">
+
+							</p>
+							<p class="btn-area"><i aria-hidden="true" class="fa fa-trash"></i> <span class="btn2 remove-btn" data-product-id="{{index.product_id}}">Remove</span></p>
+						</div>
+					</div>
+
+				{% endfor %}
+				
+			</div>
+			<div class="right-bar">
+				<p><span>Subtotal</span> <span>{{subtotal}} EGP</span></p>
+				<hr>
+				<p><span>Tax (5%)</span> <span>{{tax}} EGP</span></p>
+				<hr>
+				<p><span>Shipping</span> <span>{{shipping}} EGP</span></p>
+				<hr>
+				<p><span>Total</span> <span>{{total}} EGP</span></p>
+				<a href="{% url 'checkout' %}"><i class="fa fa-shopping-cart"></i>Checkout</a>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const quantityInputs = document.querySelectorAll(".quantity-input");
+	
+		quantityInputs.forEach(input => {
+			input.addEventListener("change", function () {
+				let productId = this.dataset.productId;  
+				let newQuantity = this.value;
+	
+				if (newQuantity < 1) {
+					this.value = 1;
+					newQuantity = 1;
+				}
+	
+				console.log(`Updating product ${productId} to quantity ${newQuantity}`);
+	
+				fetch("{% url "update_quantity" %}", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						"X-CSRFToken": getCSRFToken(),
+					},
+					body: JSON.stringify({
+						product_id: productId,
+						quantity: newQuantity
+					})
+				})
+				.then(response => response.json())
+				.then(data => {
+					console.log("Response:", data);
+					if (data.success) {
+						alert("Quantity updated successfully!");
+						// Reload the page to update all totals
+						window.location.reload();
+					} else {
+						alert("Error updating quantity!");
+					}
+				})
+				.catch(error => console.error("Error:", error));
+			});
+		});
+
+		// Add event listeners for remove buttons
+		const removeButtons = document.querySelectorAll(".remove-btn");
+		removeButtons.forEach(button => {
+			button.addEventListener("click", function() {
+				let productId = this.dataset.productId;
+				
+				if (confirm("Are you sure you want to remove this product from your cart?")) {
+					fetch("{% url "remove_product" %}", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							"X-CSRFToken": getCSRFToken(),
+						},
+						body: JSON.stringify({
+							product_id: productId
+						})
+					})
+					.then(response => response.json())
+					.then(data => {
+						if (data.success) {
+							alert("Product removed successfully!");
+							window.location.reload();
+						} else {
+							alert("Error removing product!");
+						}
+					})
+					.catch(error => console.error("Error:", error));
+				}
+			});
+		});
+	});
+	
+	function getCSRFToken() {
+		let cookieValue = null;
+		let cookies = document.cookie.split(";");
+		for (let i = 0; i < cookies.length; i++) {
+			let cookie = cookies[i].trim();
+			if (cookie.startsWith("csrftoken=")) {
+				cookieValue = cookie.substring("csrftoken=".length, cookie.length);
+				break;
+			}
+		}
+		return cookieValue;
+	}
+	
+</script>
+</html>

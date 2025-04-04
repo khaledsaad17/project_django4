@@ -1,0 +1,373 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/medicine.css'%}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+            button{
+                cursor: pointer;
+            }
+            .wish ,.cart {
+                width: 30%;
+              }
+            .login a[href*="sign_out"] {
+                color: red;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            .login a[href*="sign_out"]:hover {
+                color: darkred;
+            }
+            .search-container {
+                position: relative;
+                width: 50%;
+                margin: 0 auto;
+            }
+            .search {
+                width: 100%;
+            }
+            .search input {
+                width: 100%;
+                padding: 10px 15px;
+                border: 2px solid #ddd;
+                border-radius: 25px;
+                font-size: 16px;
+                outline: none;
+                transition: border-color 0.3s ease;
+            }
+            .search input:focus {
+                border-color: #007bff;
+            }
+            .search-results {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                max-height: 300px;
+                overflow-y: auto;
+                display: none;
+                z-index: 1000;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                margin-top: 5px;
+            }
+            .search-result-item {
+                padding: 12px 15px;
+                border-bottom: 1px solid #eee;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .search-result-item:hover {
+                background-color: #f8f9fa;
+            }
+            .search-result-item:last-child {
+                border-bottom: none;
+            }
+            .include {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="all">
+            <div class="capsule">
+             <div class="capsule_img" >
+            <img src="{% static 'img/capsule.png'%}" alt="">
+             </div>
+             <div class="capsule_text">
+             <h1>Capsule</h1>
+             </div>
+            </div>
+            <div class="login">
+                {% if  user_info.user_is_exist %}
+                    <a href="{% url 'sign_out' %}">Sign Out</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    
+        <div class="Navbar">
+            <div class="include">
+                <div class="search-container">
+                    <div class="search">
+                        <input type="text" placeholder="search for product " class="search-p" id="searchInput">
+                    </div>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+            </div>
+
+            <div class="icons">
+                <div class="wish">
+
+                    <div class="wish-txt">
+                        <a href="{% url "favorites" %}"><p>Fav ❤️</p></a> 
+                    </div>
+                 
+                 
+                </div>
+                <span> |</span>
+                <div class="wish">
+                    <div class="wish-txt">
+                        <a href="{% url "card" %}"><p>cart</p></a> 
+                    </div>
+   
+                    <div class="cart-img">
+                        <img src="{% static 'img/cart.jpeg'%}" alt="">
+                    </div>
+                    
+                </div>
+
+            </div>
+
+         </div>
+        
+
+
+
+        <div class="container">
+            <div class="c_logo">
+             <img src="{% static 'img/medicine.jpg'%}" alt="">
+            </div>
+            <div class="c_text">
+             <h2>Medication</h2>
+            </div>
+    
+           </div>
+        <!-- categories  -->
+
+    <div class="r1">
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/dus.webp'%}" alt="" class="centre ">
+            <p>Duspatalin Retard | 200 Mg</p>
+            <h3>90 EGP</h3>
+            
+                  <button onclick="addToCart(49)">Add to card</button>
+   
+        </div>
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/panadol-extra-tab-11664280219.webp'%}" alt="" class="centre ">
+            <p>Panadol | Extra Tablets for Extra</p>
+            <h3>34 EGP</h3>
+            <button onclick="addToCart(50)">Add to card</button>
+        </div>
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/panadol-cold-and-flu-day-01664875291.webp'%}" alt="" class="centre ">
+            <p>Panadol | Cold & Flu Non-Drowsy  </p>
+            <h3>50 EGP</h3>
+            <button onclick="addToCart(51)">Add to card</button>
+        </div>
+        <div class="clr"></div>
+    </div>
+
+    <!-- الصف التاني  -->
+
+    <div class="r1">
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/carbamide-cream-30gm-61xo-01675179462.webp'%}" alt="" class="centre ">
+            <p>Carbamide | Urea 10% Topical Cream </p>
+            <h3>30 EGP</h3>
+            <button onclick="addToCart(52)">Add to card</button>
+            
+        </div>
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/betaderm-cream-01-30gm-r6kp-01667716940.webp'%}" alt="" class="centre ">
+            <p>Betaderm | Cream 0.1% | 30gm</p>
+            <h3>15 EGP</h3>
+            <button onclick="addToCart(53)">Add to card</button>
+        </div>
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/polyderm-cream-20gm-bjl3-01687644583.webp'%}" alt="" class="centre ">
+            <p>Polyderm | Cream | 20gm </p>
+            <h3>13 EGP</h3>
+            <button onclick="addToCart(54)">Add to card</button>
+        </div>
+        <div class="clr"></div>
+    </div>
+
+     <!-- الصف الثالث  -->
+
+     <div class="r1">
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/milga-advance-30tab-wqzn-11690285660.webp'%}" alt="" class="centre ">
+            <p>Milga | Advance | 30 Tabs</p>
+            <h3>100 EGP</h3>
+            <button onclick="addToCart(55)">Add to card</button>
+            
+        </div>
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/oplex-n-syrup-125-ml-zrp5-01692114637.webp'%}" alt="" class="centre ">
+            <p>Oplex-N | Syrup | 125ml</p>
+            <h3>19 EGP </h3>
+            <button onclick="addToCart(56)">Add to card</button>
+        </div>
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/abimol.webp'%}" alt="" class="centre ">
+            <p>Abimol | Analgesic & Antipyretic | 500mg   </p>
+            <h3>13 EGP</h3>
+            <button onclick="addToCart(57)">Add to card</button>
+        </div>
+        <div class="clr"></div>
+    </div>
+
+    <!-- الصف الرابع   -->
+    <div class="r1">
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/macro-panthenol-cream-50-gm-01680176758.webp'%}" alt="" class="centre ">
+            <p>Macro Panthenol | Cream | 50gm</p>
+            <h3>45 EGP</h3>
+            <button onclick="addToCart(58)">Add to card</button>
+            
+        </div>
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/orient.webp'%}" alt="" class="centre ">
+            <p>Orient - N | Nipple Balm Cream | 50ml </p>
+            <h3>60 EGP</h3>
+            <button onclick="addToCart(59)">Add to card</button>
+        </div>
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/malinda-skin-cleanser-gel-200ml-awkj-01668571186.webp'%}" alt="" class="centre ">
+            <p>Blue Bell| Malinda Skin Cleanser | 200 ml </p>
+            <h3>245 EGP</h3>
+            <button onclick="addToCart(60)">Add to card</button>
+        </div>
+        <div class="clr"></div>
+    </div>
+
+
+
+
+    <div class="r1">
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/anis.webp'%}" alt="" class="centre ">
+            <p>Isis | Anise | 20 Packs</p>
+            <h3>30 EGP</h3>
+            
+                  <button onclick="addToCart(61)" >Add to card</button>
+   
+        </div>
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/duphalac.webp'%}" alt="" class="centre ">
+            <p>Duphalac | Syrup | Laxative | 200 ml</p>
+            <h3>56 EGP</h3>
+            <button onclick="addToCart(62)">Add to card</button>
+        </div>
+        <div class="c1">
+            <i class="fas fa-heart heart-icon" style="color: #ccc; cursor: pointer; font-size: 24px; margin-left: 10px; margin-top: 10px;"></i>
+            <img src="{% static 'img/royal-regime-herbal-tea-25bags-0zkh-01656341478.webp'%}" alt="" class="centre ">
+            <p>Royal | Regime Herbal Tea | 25bags  </p>
+            <h3>25 EGP</h3>
+            <button onclick="addToCart(63)">Add to card</button>
+        </div>
+        <div class="clr"></div>
+    </div>
+
+
+    </body>
+    <script>
+        function addToCart(productId) {
+            fetch("{% url 'add_to_cart' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: "product_id=" + productId
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const products = document.querySelectorAll('.c1');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            searchResults.innerHTML = '';
+            let hasResults = false;
+
+            products.forEach(product => {
+                const productName = product.querySelector('p').textContent.toLowerCase();
+                const productPrice = product.querySelector('h3').textContent;
+                
+                if (productName.includes(searchTerm)) {
+                    hasResults = true;
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+                    resultItem.innerHTML = `
+                        <div>${product.querySelector('p').textContent}</div>
+                        <div>${productPrice}</div>
+                    `;
+                    resultItem.addEventListener('click', () => {
+                        product.scrollIntoView({ behavior: 'smooth' });
+                        searchResults.style.display = 'none';
+                        searchInput.value = '';
+                    });
+                    searchResults.appendChild(resultItem);
+                }
+            });
+
+            searchResults.style.display = hasResults ? 'block' : 'none';
+        });
+
+        // Close search results when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        //  for heart icon
+        document.querySelectorAll('.heart-icon').forEach(heart => {
+            heart.addEventListener('click', function() {
+                const productId = this.closest('.c1').querySelector('button').getAttribute('onclick').match(/\d+/)[0];
+                fetch("{% url 'toggle_favorite' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: "product_id=" + productId
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.style.color = data.is_favorite ? 'red' : '#ccc';
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Please login to add products to favorites");
+                });
+            });
+        });
+    </script>
+</html>
